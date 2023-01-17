@@ -1,0 +1,19 @@
+<div class="form-container">
+     <h1>Login</h1>
+     <form action="" [formGroup]="loginForm">
+          <mat-form-field>
+               <input type="text" matInput placeholder="Enter Email Address" formControlName="email">
+          <mat-error *ngIf="email?.errors?.['required']">Email is Required</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+               <input type="password" matInput placeholder="Enter password" formControlName="password">
+               <mat-error *ngIf="password?.errors?.['required']">Password is Required</mat-error>
+          </mat-form-field>
+          <div class="center margin-top">
+               <button color="primary" mat-raised-button type="submit">Log In</button>
+          </div>
+
+          <span class="center margin-top">New to Our platform? <a class="sign-up-link" routerLink="sign-up">Sign Up</a>
+               Here</span>
+     </form>
+</div>
