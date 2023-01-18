@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, NonNullableFormBuilder, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
+import { switchMap } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 export function passwordsMatchValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -45,5 +46,37 @@ export class SignUpComponent {
     get name() {
       return this.signUpForm.get('name');
     }
-      submit() {}
+      submit() {
+        const { name, email, password } = this.signUpForm.value;
+
+        if (!this.signUpForm.valid || !name || !password || !email) {
+          return;
+        }
+
+        this.authService.signUp( name, email, password).pipe(
+          this.toast.observe({
+            success: 'Congrats! signed up',
+           loading: 'Signing up...',
+            error: ({ message }) => `${message}`,
+          })
+        ).subscribe(()=>{
+          this.router.navigate(['/home'])
+        })
+        // this.authService
+        // .signUp(email, password)
+        // .pipe(
+        //   switchMap (({ user: { uid } }) =>
+        //     this.usersService.addUser({ uid, email, displayName: name })
+        //   ),
+        //   this.toast.observe({
+        //     success: 'Congrats! signed up',
+        //     loading: 'Signing up...',
+        //     error: ({ message }) => `${message}`,
+        //   })
+        // )
+        // .subscribe(() => {
+        //   this.router.navigate(['/home']);
+        // });
+        
+      }
 }
