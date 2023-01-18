@@ -1,8 +1,15 @@
 <mat-toolbar color="primary">
   Project
-  <button mat-button routerLink="login">
-    Log In
-  </button>
+  <ng-container *ngIf="authService.currentUser$ | async as user; else loginButton">
+    <button mat-button (click)="logout()">
+      Log Out
+    </button>
+  </ng-container>
+  <ng-template #loginButton>
+    <button mat-button routerLink="login">
+      Log In
+    </button>
+  </ng-template>
 </mat-toolbar>
 <div class="content">
 <router-outlet></router-outlet>
