@@ -1,0 +1,6 @@
+<div class="form-container mat-elevation-z5 text center" *ngIf="user$ | async as user">
+  <h1>User Profile</h1>
+  <div class="profile-image"><img [src]="" width="120" height="120" [src]="user.photoURL ?? 'assets/images/profile-placeholder.jpg' " alt=""></div>
+<button mat-mini-fab (click)="inputField.click()">Edit</button>
+  <input type="file" #inputField type="file" hidden >
+</div>
