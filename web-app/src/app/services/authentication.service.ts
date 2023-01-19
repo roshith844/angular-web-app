@@ -12,22 +12,20 @@ export class AuthenticationService {
   login(email: string, password: string): Observable<any>{
    return from(signInWithEmailAndPassword(this.auth, email, password))
   }
-  signUp(name: string, email: string, password: string): Observable<any> {
-    return from(createUserWithEmailAndPassword  (this.auth, email, password)).pipe(switchMap(({user})=>{
-      return updateProfile(user, {displayName: name})
-    }))
+  signUp(email: string, password: string): Observable<any> {
+    return from(createUserWithEmailAndPassword  (this.auth, email, password))
   }
 
-    updateProfileData(profileData: Partial<any>): Observable<any> {
-     const user = this.auth.currentUser;
-  return of (user).pipe(
-     concatMap((user) => {
-        if (!user) throw new Error('Not authenticated');
+  //   updateProfileData(profileData: Partial<any>): Observable<any> {
+  //    const user = this.auth.currentUser;
+  // return of (user).pipe(
+  //    concatMap((user) => {
+  //       if (!user) throw new Error('Not authenticated');
 
-        return updateProfile(user, profileData);
-       })
-    );
-   }
+  //       return updateProfile(user, profileData);
+  //      })
+  //   );
+  //  }
 
   logout(){
     return from(this.auth.signOut())

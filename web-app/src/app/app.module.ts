@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,9 +18,13 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+
 
 import { HotToastModule } from '@ngneat/hot-toast';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -42,7 +47,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),
-    HotToastModule.forRoot(),
+    provideFirestore(() => getFirestore())
+    ,HotToastModule.forRoot(), provideDatabase(() => getDatabase()),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

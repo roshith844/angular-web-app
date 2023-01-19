@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { switchMap } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UsersService } from 'src/app/services/users.service';
+import { HttpClient } from '@angular/common/http';
 export function passwordsMatchValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('password')?.value;
@@ -23,45 +25,52 @@ export function passwordsMatchValidator(): ValidatorFn {
 })
 export class SignUpComponent {
   constructor(private authService: AuthenticationService, private router: Router,
-    private toast: HotToastService, private fb : NonNullableFormBuilder) {}
-    signUpForm = this.fb.group({
-      name: [''],
-      email: [''],
-      password: [''],
-      confirmPassword: ['']
-     },{validators: passwordsMatchValidator() })
+    private toast: HotToastService, private fb : NonNullableFormBuilder,  private usersService: UsersService) {}
+    // signUpForm = this.fb.group({
+    //   name: [''],
+    //   email: [''],
+    //   password: [''],
+    //   confirmPassword: ['']
+    //  },{validators: passwordsMatchValidator() })
 
-     get email() {
-      return this.signUpForm.get('email');
-    }
+    //  get email() {
+    //   return this.signUpForm.get('email');
+    // }
   
-    get password() {
-      return this.signUpForm.get('password');
-    }
+    // get password() {
+    //   return this.signUpForm.get('password');
+    // }
   
-    get confirmPassword() {
-      return this.signUpForm.get('confirmPassword');
-    }
+    // get confirmPassword() {
+    //   return this.signUpForm.get('confirmPassword');
+    // }
   
-    get name() {
-      return this.signUpForm.get('name');
-    }
-      submit() {
-        const { name, email, password } = this.signUpForm.value;
-
-        if (!this.signUpForm.valid || !name || !password || !email) {
-          return;
-        }
-
-        this.authService.signUp( name, email, password).pipe(
-          this.toast.observe({
-            success: 'Congrats! signed up',
-           loading: 'Signing up...',
-            error: ({ message }) => `${message}`,
-          })
-        ).subscribe(()=>{
-          this.router.navigate(['/home'])
-        })
+    // get name() {
+    //   return this.signUpForm.get('name');
+    // }
+    // submit() {
+    //   const { name, email, password } = this.signUpForm.value;
+  
+    //   if (!this.signUpForm.valid || !name || !password || !email) {
+    //     return;
+    //   }
+  
+    //   this.authService
+    //     .signUp(email, password)
+    //     .pipe(
+    //       switchMap(({ user: { uid } }) =>
+    //         this.usersService.addUser({ uid, email, displayName: name })
+    //       ),
+    //       this.toast.observe({
+    //         success: 'Congrats! You are all signed up',
+    //         loading: 'Signing up...',
+    //         error: ({ message }) => `${message}`,
+    //       })
+    //     )
+    //     .subscribe(() => {
+    //       this.router.navigate(['/home']);
+    //     });
+    // }
         // this.authService
         // .signUp(email, password)
         // .pipe(
@@ -77,6 +86,9 @@ export class SignUpComponent {
         // .subscribe(() => {
         //   this.router.navigate(['/home']);
         // });
+        getUserFormData(data: any){
+          console.log(data)
+        }
         
       }
-}
+

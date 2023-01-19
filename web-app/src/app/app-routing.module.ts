@@ -33,7 +33,7 @@ const routes: Routes = [
   ...canActivate(redirectUnauthorizedToLogin)
 },
 {
-  path: 'profile',
+  path: 'home/profile',
   component: UserProfileComponent,
   ...canActivate(redirectUnauthorizedToLogin)
 }
